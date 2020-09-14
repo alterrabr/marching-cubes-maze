@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
 
         Maze.OnMazeGenerated += AddGravity;
+
+        UIController.OnMazeRestarted += RestartMaze;
     }
 
     void Update()
@@ -51,13 +53,9 @@ public class Player : MonoBehaviour
         Vector3 move = (Camera.main.transform.right * horizontal) + (Camera.main.transform.forward * veritcal) + gravity * Time.deltaTime;
         characterController.Move(move);
 
-        if (this.transform.position.y < -3f && !mazeSolved)
+        if ((this.transform.position.y < -3f && !mazeSolved))
         {
-            OnMazeSolved();
-
-            transform.position = new Vector3(0, 30, 0);
-
-            mazeSolved = true;
+            RestartMaze();
         }
     }
 
@@ -67,5 +65,14 @@ public class Player : MonoBehaviour
         gravityValue = -9.81f;
 
         mazeSolved = false;
+    }
+
+    private void RestartMaze()
+    {
+        OnMazeSolved();
+
+        transform.position = new Vector3(0, 30, 0);
+
+        mazeSolved = true;
     }
 }

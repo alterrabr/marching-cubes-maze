@@ -31,6 +31,8 @@ public class UIController : MonoBehaviour
     public GameObject MazeInfoScreen;
     public TextMeshProUGUI MazeInfoText;
 
+    public delegate void MazeRestarted();
+    public static event MazeRestarted OnMazeRestarted;
 
     private void Start()
     {
@@ -66,6 +68,8 @@ public class UIController : MonoBehaviour
 
     public void RestartMaze()
     {
+        OnMazeRestarted();
+
         WinScreen.SetActive(false);
         GenerateMenu.SetActive(true);
         MazeInfoScreen.SetActive(false);
@@ -107,5 +111,10 @@ public class UIController : MonoBehaviour
             $"Use 3D noise: {(Use3DNoise.isOn ? "yes" : "no")}";
 
         return mazeConfigText;
+    }
+
+    public void CloseApp()
+    {
+        Application.Quit();
     }
 }

@@ -5,10 +5,14 @@
     private static float smooth = 0.3f;
     private static int mult = 10;
 
+    private static int octaves = 1;
+
     // Noise usage for blend
+    private static bool defaultPerlinNoise = true;
+
     private static bool classicNoise = false;
     private static bool perlinNoise = false;
-    private static bool simplexNoise = true;
+    private static bool simplexNoise = false;
 
     private static bool use3DNoise = false;
 
@@ -33,10 +37,22 @@
         set { mult = value; }
     }
 
+    public static int Octaves
+    {
+        get { return octaves; }
+        set { octaves = value; }
+    }
+
     public static bool ClassicNoise
     {
         get { return classicNoise; }
         set { classicNoise = value; }
+    }
+
+    public static bool DefaultPerlinNoise
+    {
+        get { return defaultPerlinNoise; }
+        set { defaultPerlinNoise = value; }
     }
 
     public static bool PerlinNoise

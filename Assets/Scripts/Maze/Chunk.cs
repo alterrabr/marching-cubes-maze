@@ -67,6 +67,7 @@ public class Chunk : MonoBehaviour
         float maxWeight = float.MinValue;
 
         PerlinNoise perlin = new PerlinNoise(1);
+        CustomPerlinNoise customPerlin = new CustomPerlinNoise();
 
         for (int x = 0; x < sizeX; x++)
         {
@@ -102,6 +103,11 @@ public class Chunk : MonoBehaviour
                     if (NoiseParameters.SimplexNoise)
                     {
                         weight += (float)(y * smoothingCoeficient + SimplexNoise.Noise(sampleX * smoothingCoeficient, sampleY * smoothingCoeficient, sampleZ * smoothingCoeficient) * multiplyer);
+                    }
+
+                    if (NoiseParameters.DefaultPerlinNoise)
+                    {
+                        weight += (y + customPerlin.Noise((float)sampleX, (float)sampleZ, NoiseParameters.Octaves) * multiplyer);
                     }
 
                     if (weight < minWeight)
@@ -245,10 +251,13 @@ public class Chunk : MonoBehaviour
 
         if (Mathf.Abs(isolevel - valp1) < 0.00001)
             return (p1);
+
         if (Mathf.Abs(isolevel - valp2) < 0.00001)
             return (p2);
+
         if (Mathf.Abs(valp1 - valp2) < 0.00001)
             return (p1);
+
         mu = (isolevel - valp1) / (valp2 - valp1);
         p.x = p1.x + mu * (p2.x - p1.x);
         p.y = p1.y + mu * (p2.y - p1.y);
@@ -256,6 +265,7 @@ public class Chunk : MonoBehaviour
 
         return (p);
     }
+
     public void Clear()
     {
         mesh.Clear();
